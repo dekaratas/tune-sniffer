@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Flask, jsonify
 import requests
 import random
@@ -10,12 +11,16 @@ app = Flask(__name__)
 
 @app.route('/random_prog_tracks')
 def get_random_prog_tracks():
+  style = "prog+rock"
+  if len(sys.argv) > 1:
+    style = sys.argv[1]
+
   discogs_url = "https://api.discogs.com/database/search"
 
   params = {
-        "style": "prog+rock",
+        "style": style,
         "page": random.randint(1, 100),
-        "per_page": 10,
+        "per_page": 100,
         "key": os.getenv('DISCOGS_SECRET_KEY'),
         "secret": os.getenv('DISCOGS_CLIENT_SECRET')
   }
@@ -29,7 +34,7 @@ def get_random_prog_tracks():
     release_ids = [result['master_id'] for result in response.json()['results']]
 
     # Randomly select 10 release IDs
-    random_release_ids = random.sample(release_ids, min(10, len(release_ids)))
+    random_release_ids = random.sample(release_ids, min(30, len(release_ids)))
 
     # List to store the track information
     random_tracks = []
@@ -57,7 +62,7 @@ def get_random_prog_tracks():
       })
 
       # Save the JSON data to a local file
-      with open('../random_tracks.json', 'w') as f:
+      with open('../data/tracks.json', 'w') as f:
         json.dump(random_tracks, f)
 
     return jsonify(random_tracks)

@@ -3,11 +3,10 @@ import spotipy
 import time
 import threading
 from spotipy.oauth2 import SpotifyOAuth
-import keyboard
 from flask import Flask, request, url_for, session, redirect
 from dotenv import load_dotenv
 
-# Loading environmental variable from .env file
+#* Loading environmental variable from .env file
 load_dotenv()
 
 app = Flask(__name__)
@@ -15,7 +14,7 @@ app = Flask(__name__)
 app.config['SESSION_COOKIE_NAME'] = 'Spotify Cookie'
 app.secret_key = os.getenv('SPOTIFY_SECRET_KEY')
 
-# Check whether track is already in "Your Music"
+#* Check whether track is already in "Your Music"
 def is_track_saved(track_uri):
     try:
         sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
@@ -30,13 +29,13 @@ def is_track_saved(track_uri):
         print(f"Error checking saved track: {e}")
         return False
 
-# Skip to next song and count down time
+#* Skip to next song and count down time
 def fn_skip_to_next_song():
     while True:
         try:
             sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-                client_id="c837c8c9014747e8a2ead8461f46ef5e",
-                client_secret="79f784e6a4d74b7aa78bade0e483971c",
+                client_id=os.getenv('SPOTIFY_CLIENT_ID'),
+                client_secret=os.getenv('SPOTIFY_CLIENT_SECRET'),
                 redirect_uri="http://localhost:5000/callback",
                 scope='user-library-read playlist-modify-public playlist-modify-private user-modify-playback-state user-read-playback-state'
             ))
@@ -58,7 +57,7 @@ def fn_skip_to_next_song():
             time.sleep(5)
             continue
 
-# Start thread on script execution
+#* Start thread on script execution
 if __name__ == "__main__":
     print("Thread started")
     skip_thread = threading.Thread(target=fn_skip_to_next_song)
