@@ -21,7 +21,7 @@ def get_random_prog_tracks():
     params = {
         "style": style,
         "page": random.randint(1, 100),
-        "per_page": 10,
+        "per_page": 30,
         "key": os.getenv('DISCOGS_SECRET_KEY'),
         "secret": os.getenv('DISCOGS_CLIENT_SECRET')
     }
