@@ -30,7 +30,7 @@ def get_random_prog_tracks():
         # Make API request
         response = requests.get(discogs_url, params=params)
         response.raise_for_status() # Raise an error IF there is one
-
+        print("So far so good")
         # Extract release IDs from response
         release_ids = [result['master_id'] for result in response.json()['results']]
 
@@ -42,6 +42,8 @@ def get_random_prog_tracks():
 
         # Iterate over selected release IDs
         for release_id in random_release_ids:
+            if not release_id:
+                continue
             # Discogs API URL for retrieving tracklist of a release
             tracklist_url = f"https://api.discogs.com/masters/{release_id}"
 
