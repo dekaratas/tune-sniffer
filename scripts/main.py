@@ -11,7 +11,7 @@ load_dotenv()
 
 def generate_tracks_json(style="prog+rock"):
     try:
-        subprocess.run(["python", "discogs.py", style], check=True, timeout=5)
+        subprocess.run(["python", "discogs.py", style], check=True, timeout=7)
         print("Tracks JSON file generated successfully")
     except subprocess.CalledProcessError as e:
         print(f"Error while generating tracks JSON: {e}")
