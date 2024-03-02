@@ -35,7 +35,7 @@ def create_playlist_from_json():
 
         playlist_id = create_playlist_and_add_tracks(tracks_uris)
         print("Playlist ID: ", playlist_id)
-        time.sleep(5)
+        time.sleep(7)
         start_playing_playlist(playlist_id)
 
         print("Playlist created and started playing")
