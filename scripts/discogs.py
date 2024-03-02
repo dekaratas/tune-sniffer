@@ -34,8 +34,8 @@ def get_random_prog_tracks():
         # Extract release IDs from response
         release_ids = [result['master_id'] for result in response.json()['results']]
 
-        # Randomly select 10 release IDs
-        random_release_ids = random.sample(release_ids, min(10, len(release_ids)))
+        # Randomly select 15 release IDs
+        random_release_ids = random.sample(release_ids, min(15, len(release_ids)))
 
         # List to store the track information
         random_tracks = []
