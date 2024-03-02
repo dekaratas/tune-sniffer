@@ -20,7 +20,7 @@ def search_tracks(track_list):
     return tracks_uris
     
 # Function to create a new playlist and add tracks to it
-def create_playlist_and_add_tracks(tracks_uris):
+def create_playlist_and_add_tracks(tracks_uris, playlist_name):
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
         client_id=os.getenv('SPOTIFY_CLIENT_ID'),
         client_secret=os.getenv('SPOTIFY_CLIENT_SECRET'),
@@ -29,7 +29,7 @@ def create_playlist_and_add_tracks(tracks_uris):
     ))
 
     user_id = sp.me()['id']
-    playlist = sp.user_playlist_create(user_id, 'My New Playlist')
+    playlist = sp.user_playlist_create(user_id, playlist_name)
     playlist_id = playlist['id']
 
     sp.playlist_add_items(playlist_id, tracks_uris)

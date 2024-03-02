@@ -20,7 +20,7 @@ def generate_tracks_json(style="prog+rock"):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-def create_playlist_from_json():
+def create_playlist_from_json(playlist_name="My New Playlist"):
     try:
         data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'tracks.json')
         with open(data_path, 'r') as file:
@@ -34,7 +34,7 @@ def create_playlist_from_json():
             print("No tracks found on Spotify")
             return
 
-        playlist_id = create_playlist_and_add_tracks(tracks_uris)
+        playlist_id = create_playlist_and_add_tracks(tracks_uris, playlist_name)
         print("Playlist ID: ", playlist_id)
         time.sleep(7)
         start_playing_playlist(playlist_id)
@@ -45,7 +45,10 @@ def create_playlist_from_json():
 
 if __name__ == "__main__":
     style = "prog+rock"
+    playlist_name = "My New Playlist"
     if len(sys.argv) > 1:
         style = sys.argv[1]
+    if len(sys.argv) > 2:
+        playlist_name = sys.argv[2]
     generate_tracks_json(style)
-    create_playlist_from_json()
+    create_playlist_from_json(playlist_name)
